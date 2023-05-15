@@ -14,6 +14,6 @@ class Teacher extends Model
         return $this->belongsToMany(studentClass::class);
     }
     public function Student(){
-        return $this->hasManyThrough(Student::class , Pivot::class , 'teacher_id' , 'student_class_id' , 'id');
+        return $this->hasManyThrough(Student::class , Pivot::class , 'teacher_id' , 'student_class_id' , 'id' , 'student_class_id');
     }
 }
