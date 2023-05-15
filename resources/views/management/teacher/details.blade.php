@@ -78,8 +78,8 @@
                                 <tr>
                                     <td>{{$i->id}}</td>
                                     <td>{{$i->name}}</td>
-                                    <td>{{$i->class}}</td>
-                                    <td>{{$i->section}}</td>
+                                    <td>{{$i->studentClass->name}}</td>
+                                    <td>{{$i->studentClass->section}}</td>
                                     <td><a href="/teacher/classpage/{{$i->id}}"><button class="btn btn-primary">View Classes</button></a></td>
                                     <td>
                                         <form action="/teacher/deleteclass" method="post">
