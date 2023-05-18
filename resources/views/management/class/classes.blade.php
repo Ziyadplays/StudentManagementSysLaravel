@@ -21,7 +21,7 @@
                         <td>{{$i->name}}</td>
                         <td>{{$i->section}}</td>
                         <td><a href="/class/view/{{$i->id}}"><button class="btn btn-primary">View Details</button></a></td>
-{{--                        <td><a href=""><button class="btn btn-primary">Delete</button></a></td>--}}
+                        <td><a href="/class/delete/{{$i->id}}"><button class="btn btn-primary">Delete</button></a></td>
 {{--                        <td><a href=""><button class="btn btn-primary">Edit</button></a></td>--}}
                 @endforeach
                 </tbody>

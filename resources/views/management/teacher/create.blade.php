@@ -6,9 +6,8 @@
                 <form method="POST" action="/teacher/create">
                     @csrf
                     <div class="form-group {{ $errors->has('name') ? ' has-danger' : '' }}">
-                        <label for="exampleInputEmail1">Name</label>
-                        <input type="text" name="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"placeholder="Enter Name">
-
+                        <label for="exampleInputEmail1">Teacher</label>
+                        <input type="text" name="name" class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"placeholder="Enter Teacher Name">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

@@ -23,22 +23,48 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-
+    @can('view-users')
+    <li class="nav-item">
+        <a class="nav-link" href="/user">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Users</span></a>
+    </li>
+    @endcan
+    @can('view-teachers')
     <li class="nav-item">
         <a class="nav-link" href="/teacher">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Teachers</span></a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="/student">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Students</span></a>
-    </li>
+    @endcan
+    @can('view-classes')
     <li class="nav-item">
         <a class="nav-link" href="/class">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Classes</span></a>
+            <span>Class</span></a>
     </li>
+    @endcan
+    @can('view-students')
+    <li class="nav-item">
+        <a class="nav-link" href="/student">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Student</span></a>
+    </li>
+    @endcan
+    @can('view-roles')
+    <li class="nav-item">
+        <a class="nav-link" href="/role">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Roles</span></a>
+    </li>
+    @endcan
+    @can('view-permissions')
+    <li class="nav-item">
+        <a class="nav-link" href="/permission">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Permissions</span></a>
+    </li>
+    @endcan
     <!-- Nav Item - Utilities Collapse Menu -->
 {{--    <li class="nav-item">--}}
 {{--        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"--}}

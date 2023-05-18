@@ -5,6 +5,9 @@ use \Illuminate\Support\Facades\Auth;
 use \App\Http\Controllers\TeachersController;
 use \App\Http\Controllers\StudentController;
 use \App\Http\Controllers\ClassController;
+use \App\Http\Controllers\RoleController;
+use \App\Http\Controllers\PermissionController;
+use \App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,6 +70,7 @@ Route::controller(ClassController::class)->prefix('/class')->group(function (){
     Route::get('/view/studentpage/{id}' , 'viewStudentPage');//makes the user jump to the teacher page of the id
     Route::delete('view/deleteteacher/' , 'deleteTeacher');
     Route::get('view/updatestudentclass/{id}' , 'viewUpdatePage');
+    Route::get('/delete/{id}' , 'delete');
 
 });
 
@@ -81,6 +85,40 @@ Route::controller(StudentController::class)->prefix('/student')->group(function(
     Route::get('/classpage/{id}' , 'viewClassPage');
     Route::get('/teacherpage/{id}' , 'viewTeacherPage');
     Route::post('/changeclass' , 'updateStudentClass');
+});
+
+Route::controller(RoleController::class)->prefix('/role')->group(function(){
+    Route::get('/' , 'index');
+    Route::get('/show' , 'show');
+    Route::get('/view/{id}' , 'view');
+    Route::post('/create' , 'create');
+    Route::delete('/delete','delete');
+    Route::get('/edit/{id}' , 'edit');
+    Route::put('/update' , 'update');
+    Route::get('/permissionview/{id}' , 'permissionview');
+    Route::post('/assignpermission/{id}' , 'assignPermission');
+    Route::post('/revokepermission/{id}' , 'revokePermission');
+});
+Route::controller(PermissionController::class)->prefix('/permission')->group(function(){
+    Route::get('/' , 'index');
+    Route::get('/show' , 'show');
+    Route::get('/view/{id}' , 'view');
+    Route::post('/create' , 'create');
+    Route::delete('/delete','delete');
+    Route::get('/edit/{id}' , 'edit');
+    Route::put('/update' , 'update');
+    Route::get('/permissionview/{id}' , 'permissionview');
+});
+Route::controller(UserController::class)->prefix('/user')->group(function(){
+    Route::get('/' , 'index');
+    Route::get('/view/{id}' , 'view');
+    Route::delete('/delete','delete');
+    Route::get('/edit/{id}' , 'edit');
+    Route::put('/update' , 'update');
+    Route::get('/show/{id}' , 'show');
+    Route::put('/assignrole/' , 'assignrole');
+    Route::delete('/revokerole' , 'revokerole');
+    Route::get('/rolepermission/{id}' , 'rolepermissions');
 
 });
 //fix the viewmore page on the details page

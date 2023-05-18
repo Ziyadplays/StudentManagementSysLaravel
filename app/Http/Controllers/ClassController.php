@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\studentClass;
 use App\Models\Teacher;
+use App\Observers\studentClassObserver;
 use Illuminate\Http\Request;
 
 class ClassController extends Controller
@@ -58,5 +59,10 @@ class ClassController extends Controller
 //        $student->save();
 //        return back()->with('success' , 'Teachers Deleted Successfully');
 
+    }
+    public function delete($id){
+       $class = studentClass::find($id);
+       $class->delete();
+       return back();
     }
 }

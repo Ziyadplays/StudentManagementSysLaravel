@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Teacher extends Model
 {
 
-    protected $fillable = ['name'];
-    use HasFactory;
+    protected $fillable = ['name' , 'deleted_by'];
+    use HasFactory ,SoftDeletes;
+
     public function studentClass(){
         return $this->belongsToMany(studentClass::class);
     }

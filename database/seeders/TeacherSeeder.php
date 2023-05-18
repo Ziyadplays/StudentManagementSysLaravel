@@ -15,7 +15,8 @@ class TeacherSeeder extends Seeder
     {
         for ($i = 1;$i <= 10 ; $i++){
             Teacher::create([
-                'name' => fake()->name
+                'name' => fake()->name,
+                'deleted_by' => null
             ]);
         }
     }

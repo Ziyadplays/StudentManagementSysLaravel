@@ -9,4 +9,5 @@ class Pivot extends \Illuminate\Database\Eloquent\Relations\Pivot
 {
     use HasFactory;
     protected $table = 'student_class_teacher';
+
 }

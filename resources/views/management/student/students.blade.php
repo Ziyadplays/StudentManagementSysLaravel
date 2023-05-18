@@ -29,7 +29,7 @@
                         <td>
                             <form action="/student/delete/" method="post">
                                 @csrf
-                                @method('UPDATE')
+                                @method('DELETE')
                                 <input type="hidden" name="id" value="{{$i->id}}">
                                 <button type="submit" class="btn btn-primary">Delete</button>
                             </form>

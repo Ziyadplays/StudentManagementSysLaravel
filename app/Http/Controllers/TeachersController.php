@@ -2,69 +2,79 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClassValidation;
+use App\Http\Requests\ValidationRequest;
+use App\Interfaces\TeacherRepositoryInterface;
 use App\Models\studentClass;
 use App\Models\Students;
 
 
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeachersController extends Controller
 {
+    private TeacherRepositoryInterface $teacherRepository;
+    public function __construct(TeacherRepositoryInterface $teacherRepository)
+    {
+        $this->teacherRepository = $teacherRepository;
+    }
+
     public function index(){
-//        $teacher = Teacher::find(1);
-//        return $teacher->Student;
-        $teachers = Teacher::all();
+        $teachers = $this->teacherRepository->index();
         return view('management.teacher.teachers' , compact('teachers'));
     }
     public function show(){
-        $classes  = studentClass::all();
+        $classes  = $this->teacherRepository->show();
         return view('management.teacher.create',compact('classes'));
     }
-    public function create(Request $request){
-        $data = $request->validate(['name' => 'required']);
-        Teacher::create($data);
+    public function create(ValidationRequest $request){
+        $data = $request->only('name');
+        $this->teacherRepository->create($data);
         return redirect('/teacher');
     }
 
     public function edit($id){
-        $data = Teacher::find($id);
+        $data = $this->teacherRepository->edit($id);
         return view('management.teacher.edit' , compact('data'));
     }
-    public function update(Request $request){
+    public function update(ValidationRequest $request){
         $teacher = Teacher::find($request->id);
-        $data = $request->validate(['name' => 'required']);
-        $teacher->update($data);
+        $data = $request->only('name');
+        $this->teacherRepository->update($teacher , $data);
         return redirect('/teacher')->with('success' , 'Teacher Updated');
     }
+
     public function delete(Request $request){
         $teacher = Teacher::find($request->id);
-        $teacher->delete($request->id);
+        $this->teacherRepository->delete($teacher);
         return back()->with('success' , 'Teachers Deleted');
     }
 
     public function showClass($id){
-        $teacher = Teacher::find($id);
-        $class = studentClass::all();
+        $details_array = $this->teacherRepository->showClass($id);
+        $teacher = $details_array[0];
+        $class = $details_array[1];
         return view('management.teacher.assignclass' ,compact('class' , 'teacher'));
     }
 
 
-    public function updateClass(Request $request){
-        $class = $request->validate(['class' => 'required']);
-        $teacher = Teacher::find($request->id);
-        if($teacher->studentClass->has($class['class'])){
+    public function updateClass(ClassValidation $request){
+        $class = $request->only('class');
+        $id = $request->only('id');
+        $flag = $this->teacherRepository->updateClass($class , $id);
+        if($flag == 0){
             return back()->with('success' , 'Class Already Exists');
 
         }
-        else{
-            $teacher->studentClass()->attach($class['class']);
-            return back()->with('success' , 'Class Assigned Successfully');
+        else {
+            return back()->with('success', 'Class Assigned Successfully');
         }
     }
     public function deleteClass(Request $request){
         $teacher = Teacher::find($request->teacherid);
-        $teacher->studentClass()->detach($request->classid);
+        $this->teacherRepository->deleteClass($teacher , $request->class_id);
         return back()->with('success' , 'Class Deleted Successfully');
     }
     public function viewClassPage($id){
@@ -72,9 +82,9 @@ class TeachersController extends Controller
     }
 
     public function viewMore($id){
-        $teacher = Teacher::find($id);
-        $students = $teacher->Student;
-
+        $details_array = $this->teacherRepository->viewMore($id);
+        $teacher = $details_array[0];
+        $students = $details_array[1];
         return view('management.teacher.details' , compact('teacher' , 'students'));
     }
 }
