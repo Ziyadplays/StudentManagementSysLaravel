@@ -28,7 +28,6 @@ Auth::routes();
 Route::get('/profile' , function(){
       if(Auth::check()){
         return view('/profile/profile');
-
     }
     else{
         return redirect('/login');
@@ -41,14 +40,16 @@ Route::get('/profile' , function(){
     /// I used this instead of the window.history.forward as done in other files because we still need the back button to be working if the user is logged in so
     /// the step is better
 });
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('DisableBackButton');
 Route::post('/profileedit' , [\App\Http\Controllers\ProfileController::class , 'test']);
 
 
 Route::get('/students' ,[StudentController::class , 'index']);
-
+Route::get('/logout' , 'Auth\LoginController@logout');
 
 Route::controller(TeachersController::class)->prefix('/teacher')->group(function (){
+
     Route::get('/' , 'index');
     Route::get('/show' , 'show');
     Route::post('/create' , 'create');
@@ -60,8 +61,7 @@ Route::controller(TeachersController::class)->prefix('/teacher')->group(function
     Route::post('/deleteclass/' , 'deleteClass');
     Route::delete('/delete','delete');
     Route::get('/classpage/{id}' , 'viewClassPage');
-
-
+    Route::get('/teacherhomedetails' , 'teacherHomeDetails');
 });
 Route::controller(ClassController::class)->prefix('/class')->group(function (){
     Route::get('/' ,'index');
@@ -97,7 +97,7 @@ Route::controller(RoleController::class)->prefix('/role')->group(function(){
     Route::put('/update' , 'update');
     Route::get('/permissionview/{id}' , 'permissionview');
     Route::post('/assignpermission/{id}' , 'assignPermission');
-    Route::post('/revokepermission/{id}' , 'revokePermission');
+    Route::delete('/revokepermission' , 'revokePermission');
 });
 Route::controller(PermissionController::class)->prefix('/permission')->group(function(){
     Route::get('/' , 'index');
@@ -120,6 +120,9 @@ Route::controller(UserController::class)->prefix('/user')->group(function(){
     Route::delete('/revokerole' , 'revokerole');
     Route::get('/rolepermission/{id}' , 'rolepermissions');
 
+});
+Route::get('/logout' , function (){
+    Auth::logout();
 });
 //fix the viewmore page on the details page
 

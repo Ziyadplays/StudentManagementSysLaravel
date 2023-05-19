@@ -66,7 +66,6 @@ class TeachersController extends Controller
         $flag = $this->teacherRepository->updateClass($class , $id);
         if($flag == 0){
             return back()->with('success' , 'Class Already Exists');
-
         }
         else {
             return back()->with('success', 'Class Assigned Successfully');
@@ -87,5 +86,13 @@ class TeachersController extends Controller
         $students = $details_array[1];
         return view('management.teacher.details' , compact('teacher' , 'students'));
     }
+    public function teacherHomeDetails(){
+        $details_array = $this->teacherRepository->teacherHomeDetails();
+        $teacher = $details_array[0];
+        $students = $details_array[1];
+        return view('hometeacher',compact('teacher' , 'students'));
+        // TODO: Implement teacherHomeDetails() method.
+    }
 }
+
 

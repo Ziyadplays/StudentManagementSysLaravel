@@ -15,10 +15,7 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="id" value="{{$user->id}}{{ $errors->has('name') ? ' has-danger' : '' }}">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Name</label>
-                        <input type="text" name="name" value="{{$user->name}} {{ $errors->has('name') ? ' is-invalid' : '' }}" class="form-control" placeholder="Enter Name">
-                    </div>
+
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email</label>
                         <input type="text" name="email" value="{{$user->email}} {{ $errors->has('name') ? ' is-invalid' : '' }}" class="form-control" placeholder="Enter Name">

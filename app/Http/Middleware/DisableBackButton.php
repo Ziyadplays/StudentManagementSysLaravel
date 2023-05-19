@@ -16,9 +16,9 @@ class disableBackButton
     public function handle(Request $request, Closure $next): Response
     {
         $response =  $next($request);
-        $response->headers->set('Cache-Control' , 'nocache,no-store,max-age=0,must-revalidate');
-        $response->headers->set('Pragma','nocache');
-        $response->headers->set("Expires", "    Thu, 19 Nov 1981 08:52:00 GMT");
-        return $response;
+        return $response->header('Cache-Control','nocache, no-store, max-age=0, must-revalidate')
+            ->header('Pragma','no-cache')
+            ->header('Expires','Sun, 02 Jan 1990 00:00:00 GMT');
+
     }
 }

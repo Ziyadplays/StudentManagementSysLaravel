@@ -18,6 +18,8 @@ interface TeacherRepositoryInterface{
 
     public function viewMore($id);
 
+    public function teacherHomeDetails();
+
 
 
 }

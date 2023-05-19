@@ -75,6 +75,14 @@ class TeacherRepository implements TeacherRepositoryInterface{
 
     }
 
+    public function teacherHomeDetails()
+    {
+        $user = Auth::user()->name;
+        $data = Teacher::where('name' , '=' , $user)->get();
+        $teacher = Teacher::find($data[0]->id);
+        $students = $teacher->Student;
+        return [$teacher , $students];
+    }
 }
 
 

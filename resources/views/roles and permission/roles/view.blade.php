@@ -29,8 +29,6 @@
                                <tr>
                                    <td>{{$i->id}}</td>
                                    <td>{{$i->name}}</td>
-                                   <td><a href="/role/view/{{$i->id}}"><button class = 'btn btn-primary'>View More</button></a></td>
-                                   <td><a href="/role/edit/{{$i->id}}"><button class = 'btn btn-primary'>Edit</button></a></td>
                                    <td>
                                        <form action="/role/revokepermission" method="POST">
                                            @csrf

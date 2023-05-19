@@ -3,6 +3,7 @@
 @section('content')
 
 <!-- Begin Page Content -->
+@hasrole('admin')
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -332,4 +333,93 @@
 
 </div>
 <!-- /.container-fluid -->
+@endhasrole
+
+@hasrole('teacher')
+
+<div class="container-fluid">
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
+    <div class="row">
+        <div class="col-md-4">
+            <h1>{{$teacher->name}}</h1>
+
+        </div>
+        <div class="w-100"></div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    Classes
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-dark">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Class</th>
+                            <th scope="col">Section</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($teacher->studentClass as $i)
+                            <tr>
+                                <td>{{$i->id}}</td>
+                                <td>{{$i->name}}</td>
+                                <td>{{$i->section}}</td>
+
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row mt-4"   >
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Students</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-dark">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Class</th>
+                            <th scope="col">Section</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($students as $i)
+                            <tr>
+                                <td>{{$i->id}}</td>
+                                <td>{{$i->name}}</td>
+                                <td>{{$i->studentClass->name}}</td>
+                                <td>{{$i->studentClass->section}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@endhasrole
+
+
+
+
 @endsection
+
+

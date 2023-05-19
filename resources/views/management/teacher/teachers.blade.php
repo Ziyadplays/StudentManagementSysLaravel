@@ -15,9 +15,9 @@
                         <h1>Teachers</h1>
                     </div>
                     <div class="card-body">
-                        <div class="addnew mb-2">
+                       {{-- <div class="addnew mb-2">
                             <a href="/teacher/show"><button class="btn btn-primary">Add New Teacher</button></a>
-                        </div>
+                        </div>--}}
                         <table class="table table-striped table-dark">
                             <thead>
                             <tr>
