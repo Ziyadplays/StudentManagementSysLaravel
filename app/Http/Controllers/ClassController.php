@@ -17,7 +17,6 @@ class ClassController extends Controller
     public function showClass($id){
         $teacher = Teacher::find($id);
         $class = studentClass::all();
-
         return view('management.teacher.assignclass' ,compact('class' , 'teacher'));
     }
     public function viewMore($id){
