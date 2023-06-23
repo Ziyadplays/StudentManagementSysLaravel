@@ -3,12 +3,9 @@
 namespace App\Repositories;
 
 
-use App\Http\Requests\ValidationRequest;
 use App\Interfaces\TeacherRepositoryInterface;
-use App\Models\Student;
 use App\Models\studentClass;
 use App\Models\Teacher;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TeacherRepository implements TeacherRepositoryInterface{
@@ -35,10 +32,13 @@ class TeacherRepository implements TeacherRepositoryInterface{
     public function update($teacher , $data)
     {
         $teacher->update($data);
+        $teacher->User->update($data);
 
     }
     public function delete($teacher)
     {
+        $user = $teacher->user;
+        $user->removeRole('teacher');
         $teacher->delete($teacher->id);
         $teacher->deleted_by = Auth::id();
         $teacher->save();
@@ -67,6 +67,7 @@ class TeacherRepository implements TeacherRepositoryInterface{
     {
         $teacher->studentClass()->detach($classid);
     }
+
     public function viewMore($id)
     {
         $teacher = Teacher::find($id);
@@ -75,14 +76,14 @@ class TeacherRepository implements TeacherRepositoryInterface{
 
     }
 
-    public function teacherHomeDetails()
-    {
-        $user = Auth::user()->name;
-        $data = Teacher::where('name' , '=' , $user)->get();
-        $teacher = Teacher::find($data[0]->id);
-        $students = $teacher->Student;
-        return [$teacher , $students];
-    }
+//    public function teacherHomeDetails()
+//    {
+//        $user = Auth::user()->name;
+//        $data = Teacher::where('name' , '=' , $user)->get();
+//        $teacher = Teacher::find($data[0]->id);
+//        $students = $teacher->Student;
+//        return [$teacher , $students];
+//    }
 }
 
 

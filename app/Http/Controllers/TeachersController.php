@@ -5,13 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ClassValidation;
 use App\Http\Requests\ValidationRequest;
 use App\Interfaces\TeacherRepositoryInterface;
-use App\Models\studentClass;
-use App\Models\Students;
-
-
 use App\Models\Teacher;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 class TeachersController extends Controller
 {
@@ -86,13 +82,7 @@ class TeachersController extends Controller
         $students = $details_array[1];
         return view('management.teacher.details' , compact('teacher' , 'students'));
     }
-    public function teacherHomeDetails(){
-        $details_array = $this->teacherRepository->teacherHomeDetails();
-        $teacher = $details_array[0];
-        $students = $details_array[1];
-        return view('hometeacher',compact('teacher' , 'students'));
-        // TODO: Implement teacherHomeDetails() method.
-    }
+//    pz
 }
 
 

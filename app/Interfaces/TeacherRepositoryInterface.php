@@ -2,8 +2,6 @@
 
 namespace App\Interfaces;
 
-use Illuminate\Http\Request;
-
 interface TeacherRepositoryInterface{
 
     public function index();
@@ -18,7 +16,7 @@ interface TeacherRepositoryInterface{
 
     public function viewMore($id);
 
-    public function teacherHomeDetails();
+//    public function teacherHomeDetails();
 
 
 
