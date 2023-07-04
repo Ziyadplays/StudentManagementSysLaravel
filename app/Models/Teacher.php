@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Teacher extends Model
+class   Teacher extends Model
 {
 
     protected $fillable = ['name', 'deleted_by', 'user_id'];
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+
 
     public function studentClass()
     {
@@ -26,4 +26,17 @@ class Teacher extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+//    public function class_detail()
+//    {
+//        return $this->hasManyThrough(
+//            studentClass::class,
+//            Pivot::class,
+//            'teacher_id', // Foreign key on the environments table...
+//            'id', // Foreign key on the deployments table...
+//            'id', // Local key on the projects table...
+//            'student_class_id' // Local key on the environments table...
+//        );
+//    }
 }

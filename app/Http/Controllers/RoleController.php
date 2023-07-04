@@ -8,25 +8,38 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    public function index(){
-        $role = Role::all();
-        return view('roles and permission.roles.role' , compact('role'));
+    public function __construct()
+    {
+        $this->middleware('can:view-roles');
     }
-    public function show(){
+
+    public function index()
+    {
+        $role = Role::all();
+        return view('roles and permission.roles.role', compact('role'));
+    }
+
+    public function show()
+    {
         return view('roles and permission.roles.create');
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $role = $request->validate(['name' => 'required']);
         Role::create($role);
-        return redirect('/role')->with('success' , 'Role Created Successfully');
+        return redirect('/role')->with('success', 'Role Created Successfully');
     }
-    public function edit($id){
+
+    public function edit($id)
+    {
         $role = Role::find($id);
         $permission = Permission::all();
-        return view('roles and permission.roles.edit' , compact('role','permission'));
+        return view('roles and permission.roles.edit', compact('role', 'permission'));
     }
-    public function update(Request $request){
+
+    public function update(Request $request)
+    {
         $role = Role::find($request->id);
         $data = $request->validate(['name' => 'required']);
         $role->update($data);

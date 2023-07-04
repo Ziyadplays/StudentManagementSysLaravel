@@ -25,7 +25,9 @@
                     <tr>
                         <td>{{$i->id}}</td>
                         <td>{{$i->name}}</td>
-                        <td><a href="/student/view/{{$i->id}}"><button class="btn btn-primary">View Details</button></a></td>
+                        <td><a href="/student/view/{{$i->id}}">
+                                <button class="btn btn-primary">View Details</button>
+                            </a></td>
                         <td>
                             <form action="/student/delete/" method="post">
                                 @csrf
@@ -34,7 +36,12 @@
                                 <button type="submit" class="btn btn-primary">Delete</button>
                             </form>
                         </td>
-                        <td><a href="class/view/updatestudentclass/{{$i->id}}"><button class="btn btn-primary">Edit</button></a></td>
+                        <td><a href="class/view/updatestudentclass/{{$i->id}}">
+                                <button class="btn btn-primary">Change Class</button>
+                            </a></td>
+                        <td><a href="student/edit/{{$i->id}}">
+                                <button class="btn btn-primary">Edit Student</button>
+                            </a></td>
                     </tr>
                 @endforeach
                 </tbody>

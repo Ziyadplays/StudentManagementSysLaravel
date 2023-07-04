@@ -6,12 +6,12 @@ namespace App\Repositories;
 use App\Interfaces\TeacherRepositoryInterface;
 use App\Models\studentClass;
 use App\Models\Teacher;
-use Illuminate\Support\Facades\Auth;
 
 class TeacherRepository implements TeacherRepositoryInterface{
     public function index()
     {
-        return Teacher::all();
+        $teachers = Teacher::with('user')->get();
+        return $teachers;
 //can use User models and get the users with only role teachers with it???
     }
     public function show()
@@ -26,12 +26,12 @@ class TeacherRepository implements TeacherRepositoryInterface{
     }
     public function edit($id)
     {
-        return Teacher::find($id);
-
+        $teacher = Teacher::find($id);
+        return $teacher;
     }
     public function update($teacher , $data)
     {
-        $teacher->update($data);
+//        $teacher->update($data);
         $teacher->User->update($data);
 
     }
@@ -39,9 +39,15 @@ class TeacherRepository implements TeacherRepositoryInterface{
     {
         $user = $teacher->user;
         $user->removeRole('teacher');
-        $teacher->delete($teacher->id);
-        $teacher->deleted_by = Auth::id();
-        $teacher->save();
+        $teacher->update([
+            'user_id' => 0
+        ]);
+        $teacher->delete();
+//        $user = $teacher->user;
+//        $user->removeRole('teacher');
+//        $teacher->delete();
+//        $teacher->deleted_by = Auth::id();
+//        $teacher->save();
 
     }
     public function showClass($id)
@@ -70,7 +76,7 @@ class TeacherRepository implements TeacherRepositoryInterface{
 
     public function viewMore($id)
     {
-        $teacher = Teacher::find($id);
+        $teacher = Teacher::where('id', $id)->with('student')->first();
         $student = $teacher->Student;
         return [$teacher, $student];
 

@@ -41,19 +41,28 @@
                                     @enderror
                                 </div>
                                 <div class="col-sm-6">
-                                    <input id="password-confirm" type="password" class="form-control form-control-user" placeholder="Repeat Password" name="password_confirmation" required autocomplete="new-password">
+                                    <input id="password-confirm" type="password" class="form-control form-control-user"
+                                           placeholder="Repeat Password" name="password_confirmation" required
+                                           autocomplete="new-password">
                                 </div>
                             </div>
+                            {{--                            <div class="form-group">--}}
+                            {{--                                <select placeholder = 'Selectrole' name='role' class="custom-select">--}}
+                            {{--                                    @foreach($roledata as $i)--}}
+                            {{--                                        <option value="{{$i->name}}">{{$i->name}}</option>--}}
+                            {{--                                    @endforeach--}}
+                            {{--                                </select>--}}
+                            {{--                            </div>--}}
                             <button type="submit" class="btn btn-primary">
                                 {{ __('Register') }}
                             </button>
                             <hr>
-{{--                            <a href="index.html" class="btn btn-google btn-user btn-block">--}}
-{{--                                <i class="fab fa-google fa-fw"></i> Register with Google--}}
-{{--                            </a>--}}
-{{--                            <a href="index.html" class="btn btn-facebook btn-user btn-block">--}}
-{{--                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook--}}
-{{--                            </a>--}}
+                            {{--                            <a href="index.html" class="btn btn-google btn-user btn-block">--}}
+                            {{--                                <i class="fab fa-google fa-fw"></i> Register with Google--}}
+                            {{--                            </a>--}}
+                            {{--                            <a href="index.html" class="btn btn-facebook btn-user btn-block">--}}
+                            {{--                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook--}}
+                            {{--                            </a>--}}
                         </form>
                         <hr>
 

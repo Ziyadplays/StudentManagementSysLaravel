@@ -14,6 +14,7 @@ class TeachersController extends Controller
     private TeacherRepositoryInterface $teacherRepository;
     public function __construct(TeacherRepositoryInterface $teacherRepository)
     {
+        $this->middleware('can:view-teachers');
         $this->teacherRepository = $teacherRepository;
     }
 
@@ -44,6 +45,7 @@ class TeachersController extends Controller
 
     public function delete(Request $request){
         $teacher = Teacher::find($request->id);
+
         $this->teacherRepository->delete($teacher);
         return back()->with('success' , 'Teachers Deleted');
     }

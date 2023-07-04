@@ -14,6 +14,11 @@
                         <h1>Users</h1>
                     </div>
                     <div class="card-body">
+                        <div class="mb-2">
+                            <a href="/user/add">
+                                <button class="btn btn-primary">Add New User</button>
+                            </a>
+                        </div>
                         <table class="table table-striped table-dark">
                             <thead>
                             <tr>

@@ -2,24 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Teacher;
+use App\Http\Requests\UserValidationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:view-users');
+    }
+
     public function index()
     {
         $user = User::all();
         return view('User.user', compact('user'));
     }
 
+    public function addnew()
+    {
+        $role = Role::all();
+        return view('User.addnew', compact('role'));
+    }
+
+    public function create(UserValidationRequest $request)
+    {
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+//        $role = Role::findById($request->roe);
+
+//        if($request->role != null && !$user->hasrole($role)){
+//
+//            $user->assignrole($request->role);
+//            if($role->name == 'teacher'){
+//                Teacher::create([
+//                    'name' => $request->name,
+//                    'user_id'=>$request->user_id
+//                ]);
+//            }
+//            elseif($role->name == 'student'){
+//                Student::create(['name' => $request->name]);
+//            }
+//        }
+        return redirect('/user')->with('success', 'User Created Successfully');
+    }
+
     public function edit($id)
     {
         $user = User::find($id);
-        return view('User.edit', compact('user'));
+        return view('   User.edit', compact('user'));
     }
 
     public function update(Request $request)
@@ -51,6 +90,7 @@ class UserController extends Controller
         return view('User.assignrole', compact('user', 'roles'));
 
     }
+
     public function delete(Request $request)
     {
         $user = User::find($request->id);
@@ -63,30 +103,49 @@ class UserController extends Controller
 
     }
 
+
     public function assignrole(Request $request)
     {
         $user = User::find($request->id);
-        $role = Role::findByName('teacher'); //find the role associated with the roleid in request
-        if ($user->hasRole($role->name)) { //when the role does not have the role
+        $role = Role::findById($request->role);
+        if ($user->hasRole($role->name)) {
             return back()->with('success', 'Role Already exists');
-
         } else {
-            if ($request->role == $role->id) { //checks if the role in request is equal to the teacher role
-                Teacher::create([
-                    'name' => $user->name,
-                    'user_id' => $user->id,
-                ]);
+            $user->assignRole($request->role);
+            if ($role->name == 'teacher') {
+
+                $user->Teacher()->create();
+            } elseif ($role->name == 'student') {
+
+                $user->Student->create();
             }
-            $user->assignrole($request->role);
-            return redirect('/user')->with('success', 'Role Successfully Assigned');
+            return back()->with('success', 'Role Assigned');
         }
+
+
+//        $user = User::find($request->id);
+//        $role = Role::findById($request->role);//find the role associated with the roleid in request
+//        if ($user->hasRole($role->name)) { //when the role does not have the role
+//            return back()->with('success', 'Role Already exists');
+//
+//        }
+//        else{
+//            if ($request->role == $role->id) { //checks if the role in request is equal to the teacher role
+//               $u
+//            }
+//            $user->assignrole($request->role);
+//            return redirect('/user')->with('success', 'Role Successfully Assigned');
+//        }
     }
+
     public function revokerole(Request $request)
     {
         $user = User::find($request->userid);
         $role = Role::find($request->roleid);
         if ($user->hasRole('teacher')) { //if the user has the role of teacher then it will delete the Teacher of the same details as the user
-            $user->Teacher->delete();
+            $user->Teacher()->delete();
+        } elseif ($user->hasRole('student')) {
+            $user->Student()->delete();
         }
         $user->removerole($role); //removes the role
         return back()->with('success', 'Role Removed');

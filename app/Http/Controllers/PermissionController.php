@@ -4,22 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class PermissionController extends Controller
 {
-    public function index(){
-        $permission = Permission::all();
-        return view('roles and permission.permission.permission' , compact('permission'));
+    public function __construct()
+    {
+        $this->middleware('can:view-permissions');
     }
-    public function show(){
+
+    public function index()
+    {
+        $permission = Permission::all();
+        return view('roles and permission.permission.permission', compact('permission'));
+    }
+
+    public function show()
+    {
         return view('roles and permission.permission.create');
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $permission = $request->validate(['name' => 'required']);
         Permission::create($permission);
-        return redirect('/permission')->with('success' , 'Permission Created Successfully');
+        return redirect('/permission')->with('success', 'Permission Created Successfully');
     }
     //skipping the edit functionality because we will need to edit it everywhere,ill come back to it
 //    public function edit($id){
