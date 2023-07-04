@@ -22,6 +22,7 @@ class ClassController extends Controller
     public function viewMore($id){
         $class = studentClass::find($id);
         $students = $class->Student;
+
         return view('management.class.details' , compact('class' , 'students'));
     }
 

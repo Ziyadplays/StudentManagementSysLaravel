@@ -10,7 +10,7 @@
         @endif
         <div class="row">
             <div class="col-md-8">
-                <h4>Edit Teacher</h4>
+                <h4>Edit Student</h4>
                 <form method="POST" action="/student/update">
                     @csrf
                     @method('PUT')
@@ -19,7 +19,7 @@
                                value="{{$student->id}}{{ $errors->has('name') ? ' has-danger' : '' }}">
                         <label for="exampleInputEmail1">Name</label>
                         <input type="text" name="name"
-                               value="{{$student->name}} {{ $errors->has('name') ? ' is-invalid' : '' }}"
+                               value="{{$student->user->name}} {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                class="form-control" placeholder="Enter Name">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

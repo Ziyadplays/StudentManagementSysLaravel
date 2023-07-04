@@ -15,7 +15,7 @@ class StudentController extends Controller
 
     public function index()
     {
-        $students = student::paginate(25);
+        $students = Student::with('user')->get();
         return view('management.student.students', compact('students'));
     }
 
@@ -45,17 +45,17 @@ class StudentController extends Controller
     {
         $student = Student::find($request->id);
         $data = $request->validate(['name' => 'required']);
-        $student->update($data);
+        $student->User()->update($data);
         return back()->with('success', 'Student Updated Successfully');
     }
 
     public function delete(Request $request)
     {
+
         $student = Student::find($request->id);
-        if ($student->hasRole('student')) {
-            $student->removeRole('student');
-        }
-        $student->delete($request->id);
+        $user = $student->User;
+        $user->removeRole('student');
+        $student->delete();
         return back()->with('success', 'Student Deleted Successfully');
     }
 
@@ -63,12 +63,7 @@ class StudentController extends Controller
     {
         $class = student::find($id)->studentClass;
         $student = student::find($id);
-        if ($class == null) {
-            $nullclassmessage = "This Student has no class Assigned.Please Assign the class";
-            return view('management.student.edit', compact('student', 'nullclassmessage'));
-        } else {
-            return view('management.student.details', compact('student', 'class'));
-        }
+        return view('management.student.details', compact('class', 'student'));
     }
 
     public function viewClassPage($id)

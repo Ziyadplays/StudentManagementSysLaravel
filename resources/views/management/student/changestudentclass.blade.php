@@ -19,8 +19,8 @@
                             @csrf
 {{--                            @method('PUT')--}}
                             <div class="form-group">
-                                <h4>Current Class: {{$student->studentClass->name."-".$student->studentClass->section}}</h4>
-                                <input type="hidden" name="id" value="{{$student->id}}">
+
+                            <input type="hidden" name="id" value="{{$student->id}}">
                                 <select name="class" class="custom-select">
                                     @foreach($class as $i)
                                         <option value="{{$i->id}}">{{$i->name}}-{{$i->section}}</option>

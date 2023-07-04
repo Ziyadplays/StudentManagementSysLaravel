@@ -26,16 +26,21 @@
                             @foreach($class->Teacher as $i)
                                 <tr>
                                     <td>{{$i->id}}</td>
-                                    <td>{{$i->name}}</td>
-                                    <td><a href="classpage/{{$i->id }}}"><button class="btn btn-primary">View More</button></a></td>
+                                    <td>{{\App\Models\Teacher::find($i->id)->user->name}}</td>
+                                    <td><a href="classpage/{{$i->id }}}">
+                                            <button class="btn btn-primary">View More</button>
+                                        </a></td>
                                     <td>
                                         <form action="deleteteacher" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name='id' value="{{$i->id}}">
                                             <button type="submit" class="btn btn-primary">Delete</button>
-                                        </form></td>
-                                    <td><a href=""><button class="btn btn-primary">Edit</button></a></td>
+                                        </form>
+                                    </td>
+                                    <td><a href="">
+                                            <button class="btn btn-primary">Edit</button>
+                                        </a></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -64,16 +69,13 @@
                             @foreach($students as $i)
                                 <tr>
                                     <td>{{$i->id}}</td>
-                                    <td>{{$i->name}}</td>
-                                    <td><a href="studentpage/{{$i->id }}}"><button class="btn btn-primary">View More</button></a></td>
-{{--                                    <td>--}}
-{{--                                        <form action="updatestudentclass" method="POST">--}}
-{{--                                            @csrf--}}
-{{--                                            @method('PUT')--}}
-{{--                                            <input type="hidden" name='id' value="{{$i->id}}">--}}
-{{--                                            <button type="submit" class="   btn btn-primary">Delete</button>--}}
-{{--                                        </form></td>--}}
-                                    <td><a href="updatestudentclass/{{$i->id}}"><button class="btn btn-primary">Change Class</button></a></td>
+                                    <td>{{$i->user->name}}</td>
+                                    <td><a href="studentpage/{{$i->id }}}">
+                                            <button class="btn btn-primary">View More</button>
+                                        </a></td>
+                                    <td><a href="updatestudentclass/{{$i->id}}">
+                                            <button class="btn btn-primary">Change Class</button>
+                                        </a></td>
                                 </tr>
                             @endforeach
                             </tbody>

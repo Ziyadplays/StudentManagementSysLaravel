@@ -390,7 +390,7 @@
                         @foreach($students as $i)
                             <tr>
                                 <td>{{$i->id}}</td>
-                                <td>{{$i->name}}</td>
+                                <td>{{\App\Models\Student::find($i->id)->user->name}}</td>
                                 <td>{{$i->studentClass->name}}</td>
                                 <td>{{$i->studentClass->section}}</td>
                             </tr>
@@ -410,7 +410,7 @@
     @hasrole('student')
     <div class="row">
         <div class="col-md-4">
-            <h1>{{$student->name}}</h1>
+            <h1>{{\App\Models\Student::find($student->id)->user->name}}</h1>
         </div>
         <div class="w-100"></div>
         <div class="col-md-8">
@@ -440,14 +440,12 @@
         </div>
     </div>
     <div class="row mt-4">
-        <div class="col-md-4">
-            <h1>Teachers</h1>
-        </div>
+
         <div class="w-100"></div>
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    Classes
+                    Teachers
                 </div>
                 <div class="card-body">
                     <table class="table table-striped table-dark">
@@ -461,7 +459,7 @@
                         @foreach($class->Teacher as $i)
                             <tr>
                                 <td>{{$i->id}}</td>
-                                <td>{{$i->name}}</td>
+                                <td>{{\App\Models\Teacher::find($i->id)->user->name}}</td>
                             </tr>
                         @endforeach
                         </tbody>

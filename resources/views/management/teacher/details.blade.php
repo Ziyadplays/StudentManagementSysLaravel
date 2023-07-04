@@ -77,17 +77,17 @@
                             @foreach($students as $i)
                                 <tr>
                                     <td>{{$i->id}}</td>
-                                    <td>{{$i->name}}</td>
+                                    <td>{{\App\Models\Student::find($i->id)->user->name}}</td>
                                     <td>{{$i->studentClass->name}}</td>
                                     <td>{{$i->studentClass->section}}</td>
-{{--                                    <td><a href="/class/classpage/{{$i->id}}"><button class="btn btn-primary">View Classes</button></a></td>--}}
-{{--                                    <td>--}}
-{{--                                        <form action="/teacher/deleteclass" method="post">--}}
-{{--                                            @csrf--}}
-{{--                                            <input type="hidden" name="classid" value="{{$i->id}}">--}}
-{{--                                            <input type="hidden" name="teacherid" value="{{$teacher->id}}">--}}
-{{--                                            <button type="submit" class="btn btn-primary">Delete</button>--}}
-{{--                                        </form>--}}
+                                    {{--                                    <td><a href="/class/classpage/{{$i->id}}"><button class="btn btn-primary">View Classes</button></a></td>--}}
+                                    {{--                                    <td>--}}
+                                    {{--                                        <form action="/teacher/deleteclass" method="post">--}}
+                                    {{--                                            @csrf--}}
+                                    {{--                                            <input type="hidden" name="classid" value="{{$i->id}}">--}}
+                                    {{--                                            <input type="hidden" name="teacherid" value="{{$teacher->id}}">--}}
+                                    {{--                                            <button type="submit" class="btn btn-primary">Delete</button>--}}
+                                    {{--                                        </form>--}}
 {{--                                    </td>--}}
                                 </tr>
                             @endforeach

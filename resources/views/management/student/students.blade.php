@@ -11,7 +11,6 @@
             Students
         </div>
         <div class="card-body">
-            <a href="/student/show"><button class="btn btn-primary mb-2">Add New <Student></Student></button></a>
             <table class="table table-striped table-dark">
                 <thead>
                 <tr>
@@ -24,10 +23,11 @@
                 @foreach($students as $i)
                     <tr>
                         <td>{{$i->id}}</td>
-                        <td>{{$i->name}}</td>
+                        <td>{{$i->user->name}}</td>
                         <td><a href="/student/view/{{$i->id}}">
                                 <button class="btn btn-primary">View Details</button>
-                            </a></td>
+                            </a>
+                        </td>
                         <td>
                             <form action="/student/delete/" method="post">
                                 @csrf
@@ -47,10 +47,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="d-flex justify-content-center">
-            {!! $students->links('pagination::bootstrap-5') !!}
-        </div>
+        {{--        <div class="d-flex justify-content-center">--}}
+        {{--            {!! $students->links('pagination::bootstrap-5') !!}--}}
+        {{--        </div>--}}
     </div>
-
 
 @endsection

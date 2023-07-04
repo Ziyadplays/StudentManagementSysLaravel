@@ -30,28 +30,11 @@ class UserController extends Controller
 
     public function create(UserValidationRequest $request)
     {
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-
-//        $role = Role::findById($request->roe);
-
-//        if($request->role != null && !$user->hasrole($role)){
-//
-//            $user->assignrole($request->role);
-//            if($role->name == 'teacher'){
-//                Teacher::create([
-//                    'name' => $request->name,
-//                    'user_id'=>$request->user_id
-//                ]);
-//            }
-//            elseif($role->name == 'student'){
-//                Student::create(['name' => $request->name]);
-//            }
-//        }
         return redirect('/user')->with('success', 'User Created Successfully');
     }
 
@@ -68,8 +51,11 @@ class UserController extends Controller
             'email' => 'required'
         ]);
         $user = User::find($request->id);
+
         if ($user->hasRole('teacher')) { // if the user has the role called teacher then it will also update the teacher associated with the user
-            $user->Teacher->update($data);
+            $user->Teacher()->update($data);
+        } elseif ($user->hasRole('student')) {
+            $user->Student()->update($data);
         }
         $user->update($data);
         return redirect('/user')->with('success', 'User Updated Successfully');
@@ -88,7 +74,6 @@ class UserController extends Controller
         $user = User::find($id);
         $roles = Role::all();
         return view('User.assignrole', compact('user', 'roles'));
-
     }
 
     public function delete(Request $request)
@@ -96,11 +81,11 @@ class UserController extends Controller
         $user = User::find($request->id);
         if ($user->hasRole('teacher')) {
             $user->Teacher()->delete();
+        } elseif ($user->hasRole('student')) {
+            $user->Student()->delete();
         }
         $user->delete($user->id);
-
         return back()->with('success', 'User Deleted');
-
     }
 
 
@@ -116,26 +101,10 @@ class UserController extends Controller
 
                 $user->Teacher()->create();
             } elseif ($role->name == 'student') {
-
-                $user->Student->create();
+                $user->Student()->create();
             }
             return back()->with('success', 'Role Assigned');
         }
-
-
-//        $user = User::find($request->id);
-//        $role = Role::findById($request->role);//find the role associated with the roleid in request
-//        if ($user->hasRole($role->name)) { //when the role does not have the role
-//            return back()->with('success', 'Role Already exists');
-//
-//        }
-//        else{
-//            if ($request->role == $role->id) { //checks if the role in request is equal to the teacher role
-//               $u
-//            }
-//            $user->assignrole($request->role);
-//            return redirect('/user')->with('success', 'Role Successfully Assigned');
-//        }
     }
 
     public function revokerole(Request $request)
@@ -149,8 +118,6 @@ class UserController extends Controller
         }
         $user->removerole($role); //removes the role
         return back()->with('success', 'Role Removed');
-
-
     }
 
     public function rolepermissions(Request $request)
