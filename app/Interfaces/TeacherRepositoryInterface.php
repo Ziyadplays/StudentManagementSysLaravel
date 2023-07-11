@@ -6,7 +6,7 @@ interface TeacherRepositoryInterface{
 
     public function index();
     public function show();
-    public function create($data);
+
     public function edit($id);
     public function update($teacher ,$data );
     public function delete($teacher);

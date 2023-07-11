@@ -26,11 +26,7 @@ class TeachersController extends Controller
         $classes  = $this->teacherRepository->show();
         return view('management.teacher.create',compact('classes'));
     }
-    public function create(ValidationRequest $request){
-        $data = $request->only('name');
-        $this->teacherRepository->create($data);
-        return redirect('/teacher');
-    }
+
 
     public function edit($id){
         $data = $this->teacherRepository->edit($id);

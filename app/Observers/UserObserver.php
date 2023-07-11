@@ -12,15 +12,36 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        $role = Role::findById(request()->role);
-        if (request()->has('role') && !$user->hasRole($role)) {
-            $user->assignRole(request()->role);
-            if ($role->name == 'teacher') {
-                $user->Teacher()->create();
-            } elseif ($role->name == 'student') {
-                $user->Student()->create();
+
+//        if (request()->has('role') && !$user->hasRole($role)) {
+//            $role = Role::findById(request()->role);
+//            $user->assignRole(request()->role);
+//            if ($role->name == 'teacher') {
+//                $user->Teacher()->create();
+//            } elseif ($role->name == 'student') {
+//                $user->Student()->create();
+//            }
+//        }
+        if (request()->has('role')) {
+            $role = Role::findById(request()->role);
+            if (!$user->hasRole($role)) {
+                $user->assignRole(request()->role);
+                if ($role->name == 'teacher') {
+                    $user->Teacher()->create();
+                } elseif ($role->name == 'student') {
+                    $user->Student()->create();
+                }
             }
+
+        } else {
+            $user->assignRole('student');
+            $user->Student()->create();
+
         }
+        //now in this code  it checks if the user has the role or not in another if statement instead of in the same one because it was
+        //causing problems in the register form
+        //if there is no role in request which is only possible in the registration form when the user is not logged in  then it automatically assigns
+        //student role to the user and creates the Student which is related to the user.
 
     }
 

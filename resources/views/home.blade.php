@@ -337,7 +337,7 @@
     @endif
     <div class="row">
         <div class="col-md-4">
-            <h1>{{$teacher->name}}</h1>
+            <h1>{{\App\Models\Teacher::find($teacher->id)->user->name}}</h1>
 
         </div>
         <div class="w-100"></div>
@@ -370,11 +370,11 @@
             </div>
         </div>
     </div>
-    <div class="row mt-4"   >
+    <div class="row mt-4">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h2>Students</h2>
+                    Students
                 </div>
                 <div class="card-body">
                     <table class="table table-striped table-dark">
@@ -409,35 +409,43 @@
     @endhasrole
     @hasrole('student')
     <div class="row">
-        <div class="col-md-4">
-            <h1>{{\App\Models\Student::find($student->id)->user->name}}</h1>
-        </div>
-        <div class="w-100"></div>
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    Classes
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped table-dark">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Class</th>
-                            <th scope="col">Section</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>{{$class->id}}</td>
-                            <td>{{$class->name}}</td>
-                            <td>{{$class->section}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+        @if($class->id == 0)
+            <div class="col">
+                <h1>
+                    Please Contact your admin to assign you a class!
+                </h1>
+            </div>
+        @else
+
+            <div class="col-md-4">
+                <h1>{{\App\Models\Student::find($student->id)->user->name}}</h1>
+            </div>
+            <div class="w-100"></div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        Classes
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-dark">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Class</th>
+                                <th scope="col">Section</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{{$class->id}}</td>
+                                <td>{{$class->name}}</td>
+                                <td>{{$class->section}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
     <div class="row mt-4">
 
@@ -468,6 +476,9 @@
             </div>
         </div>
     </div>
+    @endif
+
+
     @endhasrole
 
 </div>

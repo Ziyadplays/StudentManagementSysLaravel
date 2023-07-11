@@ -98,7 +98,6 @@ class UserController extends Controller
         } else {
             $user->assignRole($request->role);
             if ($role->name == 'teacher') {
-
                 $user->Teacher()->create();
             } elseif ($role->name == 'student') {
                 $user->Student()->create();

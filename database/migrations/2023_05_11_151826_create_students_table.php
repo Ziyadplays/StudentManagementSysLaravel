@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('courses')->nullable();
-            $table->integer('student_class_id')->nullable();
+            $table->integer('student_class_id')->default(21);
             $table->timestamps();
         });
     }

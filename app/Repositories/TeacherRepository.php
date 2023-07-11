@@ -19,11 +19,7 @@ class TeacherRepository implements TeacherRepositoryInterface{
         return studentclass::all();
 
     }
-    public function create($data)
-    {
-        Teacher::create($data);
 
-    }
     public function edit($id)
     {
         $teacher = Teacher::find($id);
@@ -73,7 +69,6 @@ class TeacherRepository implements TeacherRepositoryInterface{
     {
         $teacher->studentClass()->detach($classid);
     }
-
     public function viewMore($id)
     {
         $teacher = Teacher::where('id', $id)->with('student')->first();
@@ -81,15 +76,6 @@ class TeacherRepository implements TeacherRepositoryInterface{
         return [$teacher, $student];
 
     }
-
-//    public function teacherHomeDetails()
-//    {
-//        $user = Auth::user()->name;
-//        $data = Teacher::where('name' , '=' , $user)->get();
-//        $teacher = Teacher::find($data[0]->id);
-//        $students = $teacher->Student;
-//        return [$teacher , $students];
-//    }
 }
 
 
